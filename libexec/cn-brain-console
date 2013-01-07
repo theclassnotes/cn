@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Usage: cn brain-console
+# Summary: Open up a Rails console for brain.theclassnotes.com
+
+set -e
+
+to_execute="cd /home/classnot/brain.theclassnotes.com"
+to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rails c"
+
+ssh -p 22 classnot@theclassnotes.com -t $to_execute
