@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Usage: cn brain-restart
+# Summary: Restart the Passenger application for brain.theclassnotes.com
+
+set -e
+
+ssh -p 22 classnot@theclassnotes.com -t "touch /home/classnot/brain.theclassnotes.com/tmp/restart.txt"
