@@ -4,4 +4,4 @@
 
 set -e
 
-ssh -p 22 classnot@theclassnotes.com -t "touch /home/classnot/brain.theclassnotes.com/tmp/restart.txt"
+ssh -p 22 classnot@theclassnotes.com -q -t "touch /home/classnot/brain.theclassnotes.com/tmp/restart.txt"
