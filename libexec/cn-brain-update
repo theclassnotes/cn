@@ -6,7 +6,7 @@ set -e
 
 to_execute="cd /home/classnot/brain.theclassnotes.com"
 to_execute="$to_execute; git pull origin master -q"
-to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle install --path .vendor -q"
+to_execute="$to_execute; /home/classnot/.gems/bin/bundle install --path .vendor"
 to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rake db:migrate -q"
 to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rake assets:precompile -q"
 
