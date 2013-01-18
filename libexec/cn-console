@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
-# Usage: cn brain-console
-# Summary: Open up a Rails console for brain.theclassnotes.com
+# Usage: cn console SUBDOMAIN
+# Summary: Open up a Rails console for SUBDOMAIN.theclassnotes.com
 
 set -e
 
-to_execute="cd /home/classnot/brain.theclassnotes.com"
-to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rails c"
-
-ssh -p 22 classnot@theclassnotes.com -q -t $to_execute
+if [ $# -gt 0 ]; then
+  echo "Booting Rails console for $1.theclassnotes.com..."
+  to_execute="cd /home/classnot/$1.theclassnotes.com"
+  to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rails c"
+  ssh -p 22 classnot@theclassnotes.com -q -t $to_execute
+else
+  echo "No subdomain specified."
+  exit -1
+fi

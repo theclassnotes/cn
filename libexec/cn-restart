@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-# Usage: cn brain-restart
-# Summary: Restart the Passenger application for brain.theclassnotes.com
+# Usage: cn restart SUBDOMAIN
+# Summary: Restart the Passenger application for SUBDOMAIN.theclassnotes.com
 
 set -e
 
-ssh -p 22 classnot@theclassnotes.com -q -t "touch /home/classnot/brain.theclassnotes.com/tmp/restart.txt"
+if [ $# -gt 0 ]; then
+  echo "Restarting $1.theclassnotes.com..."
+  ssh -p 22 classnot@theclassnotes.com -q -t "touch /home/classnot/$1.theclassnotes.com/tmp/restart.txt"
+else
+  echo "No subdomain specified."
+  exit -1
+fi

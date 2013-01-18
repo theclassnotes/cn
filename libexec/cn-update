@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
-# Usage: cn brain-update
-# Summary: Update to the latest version of the Brain, update gems and rails, and reboot Passenger
+# Usage: cn update SUBDOMAIN
+# Summary: Update to the latest version of SUBDOMAIN, update gems and rails, and reboot Passenger
 
 set -e
 
-to_execute="cd /home/classnot/brain.theclassnotes.com"
-to_execute="$to_execute; git pull origin master -q"
-to_execute="$to_execute; /home/classnot/.gems/bin/bundle install --path .vendor"
-to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rake db:migrate -q"
-to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rake assets:precompile -q"
-
-ssh -p 22 classnot@theclassnotes.com -q -t $to_execute
-
-./cn-brain-restart
+if [ $# -gt 0 ]; then
+  echo "Updating $1.theclassnotes.com..."
+  to_execute="cd /home/classnot/$1.theclassnotes.com"
+  to_execute="$to_execute; git pull origin master -q"
+  to_execute="$to_execute; /home/classnot/.gems/bin/bundle install --path .vendor"
+  to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rake db:migrate -q"
+  to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rake assets:precompile -q"
+  ssh -p 22 classnot@theclassnotes.com -q -t $to_execute
+  `./cn-restart $1`
+else
+  echo "No subdomain specified."
+  exit -1
+fi
