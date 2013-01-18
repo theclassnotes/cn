@@ -6,8 +6,7 @@ set -e
 
 if [ $# -gt 0 ]; then
   echo "Fetching log for $1.theclassnotes.com..."
-  to_execute="cd /home/classnot/$1.theclassnotes.com"
-  to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rails c"
+  to_execute="tail -n 100 /home/classnot/$1.theclassnotes.com/log/production.log"
   ssh -p 22 classnot@theclassnotes.com -q -t $to_execute
 else
   echo "No subdomain specified."
