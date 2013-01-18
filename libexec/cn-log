@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Usage: cn log SUBDOMAIN
+# Summary: Print last 100 lines of production log for SUBDOMAIN.theclassnotes.com
+
+set -e
+
+if [ $# -gt 0 ]; then
+  echo "Fetching log for $1.theclassnotes.com..."
+  to_execute="cd /home/classnot/$1.theclassnotes.com"
+  to_execute="$to_execute; RAILS_ENV=production /home/classnot/.gems/bin/bundle exec rails c"
+  ssh -p 22 classnot@theclassnotes.com -q -t $to_execute
+else
+  echo "No subdomain specified."
+  exit -1
+fi
